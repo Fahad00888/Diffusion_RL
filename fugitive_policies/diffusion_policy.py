@@ -517,7 +517,7 @@ class DiffusionGlobalPlanner(object):
         new_location = np.round(start_location + direction * speed)
         new_location[0] = np.clip(new_location[0], 0, self.env.dim_x - 1)
         new_location[1] = np.clip(new_location[1], 0, self.env.dim_y - 1)
-        new_location = new_location.astype(np.int)
+        new_location = new_location.astype(int)
         return new_location
 
     def unnormalize(self, sample):

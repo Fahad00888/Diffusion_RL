@@ -15,7 +15,7 @@ def sample_sequence_from_buffer(buffer, batch_size, sequence_length, observation
     # reshape to rows, timestamps, features
     for index in indexes:
         last_observation = buffer.states[index]
-        timestep = torch.round(last_observation[0] * max_timesteps).detach().cpu().numpy().astype(np.int)
+        timestep = torch.round(last_observation[0] * max_timesteps).detach().cpu().numpy().astype(int)
 
         if timestep >= sequence_length - 1:
             sequence = torch.squeeze(buffer.states[index-sequence_length+1:index+1], 1)

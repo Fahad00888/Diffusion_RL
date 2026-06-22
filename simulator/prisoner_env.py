@@ -962,11 +962,11 @@ class PrisonerBothEnv(gym.Env):
         self.current_prisoner_speed = fugitive_speed
         self.current_prisoner_velocity = direction * fugitive_speed * (self.max_timesteps / self.dim_x)
 
-        # prisoner_location = np.array(self.prisoner.location, dtype=np.float)
+        # prisoner_location = np.array(self.prisoner.location, dtype=float)
         # new_location = np.round(prisoner_location + direction * fugitive_speed)
         # new_location[0] = np.clip(new_location[0], 0, self.dim_x - 1)
         # new_location[1] = np.clip(new_location[1], 0, self.dim_y - 1)
-        # new_location = new_location.astype(np.int)
+        # new_location = new_location.astype(int)
 
         # # bump back from mountain
         # if self.terrain.world_representation[0, new_location[0], new_location[1]] == 1:
@@ -1149,11 +1149,11 @@ class PrisonerBothEnv(gym.Env):
         self.current_prisoner_speed = speed
         self.current_prisoner_velocity = direction * speed * (self.max_timesteps / self.dim_x)
 
-        prisoner_location = np.array(self.prisoner.location, dtype=np.float)
+        prisoner_location = np.array(self.prisoner.location, dtype=float)
         new_location = np.round(prisoner_location + direction * speed)
         new_location[0] = np.clip(new_location[0], 0, self.dim_x - 1)
         new_location[1] = np.clip(new_location[1], 0, self.dim_y - 1)
-        new_location = new_location.astype(np.int)
+        new_location = new_location.astype(int)
 
         # bump back from mountain
         if self.terrain.world_representation[0, new_location[0], new_location[1]] == 1:
@@ -2670,7 +2670,7 @@ class PrisonerBothEnv(gym.Env):
         :param coord: float sequence of length 2 in the range [0, 1)
         :return: np.ndarray of shape (2,) in the range [(0, 0), (dim_x, dim_y))
         """
-        return np.array([coord[0] * self.dim_x, coord[1] * self.dim_y], dtype=np.int)
+        return np.array([coord[0] * self.dim_x, coord[1] * self.dim_y], dtype=int)
 
     def set_seed(self, seed):
         """

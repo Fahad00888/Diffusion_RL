@@ -280,3 +280,14 @@ mlruns*/
 wandb/
 AAMAS_2023_logs/
 map_construction/
+
+# Fahad reproduction - don't commit data/backups/checkpoints
+datasets/balance_game_test/
+datasets/balance_game/
+*.orig
+*.npz
+*.pt
+*.pth
+logs/
+__pycache__/
+*.pyc

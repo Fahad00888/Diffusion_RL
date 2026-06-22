@@ -5,11 +5,20 @@ from torch import embedding, nn
 import torch.nn.functional as F
 # from blue_bc.utils import gumbel_softmax_soft_hard
 from models.encoders import EncoderRNN
-import dgl
-import dgl.nn as dglnn
+try:
+    import dgl
+except ModuleNotFoundError:
+    dgl = None
+try:
+    import dgl.nn as dglnn
+except ModuleNotFoundError:
+    dglnn = None
 from models.gnn.gnn import fully_connected, fully_connected_include_self, central_graph
 from itertools import combinations
-from dgl.nn import AvgPooling
+try:
+    from dgl.nn import AvgPooling
+except ModuleNotFoundError:
+    AvgPooling = None
 from bc_utils import build_mlp, build_mlp_hidden_layers, reparameterize, reparameterize_sigmoid, evaluate_lop_pi, evaluate_lop_pi_para, atanh, calculate_log_pi
 
 

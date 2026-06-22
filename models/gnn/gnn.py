@@ -2,12 +2,21 @@ from re import X
 from matplotlib.pyplot import xlabel, xlim
 import torch
 import torch.nn as nn
-import dgl
-import dgl.nn as dglnn
+try:
+    import dgl
+except ModuleNotFoundError:
+    dgl = None
+try:
+    import dgl.nn as dglnn
+except ModuleNotFoundError:
+    dglnn = None
 from models.encoders import EncoderRNN
 from itertools import combinations, combinations_with_replacement
 import torch
-from dgl.nn import AvgPooling
+try:
+    from dgl.nn import AvgPooling
+except ModuleNotFoundError:
+    AvgPooling = None
 import numpy as np
 
 def fully_connected_include_self(num_nodes):
