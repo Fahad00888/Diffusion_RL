@@ -246,7 +246,8 @@ def collect_waypoints(epsilon, num_runs,
                     heuristic_type,
                     blue_type,
                     env_path,
-                    show=False):
+                    show=False,
+                    loop_runs=None):
     """ Collect demonstrations for the homogeneous gnn where we assume all agents are the same. 
     :param env: Environment to collect demonstrations from
     :param policy: Policy to use for demonstration collection
@@ -263,7 +264,8 @@ def collect_waypoints(epsilon, num_runs,
     # dataloader_init = False
     
     break_goal_sample_rate = 0
-    for seed in tqdm(range(starting_seed, starting_seed + num_runs)):
+    _loop = loop_runs if loop_runs is not None else num_runs
+    for seed in tqdm(range(starting_seed, starting_seed + _loop)):
         goal_sample_rate = 0.1
         # goal_sample_rate = break_goal_sample_rate + (0.6 - break_goal_sample_rate) / num_runs * (seed - starting_seed)
         print("goal_sample_rate: ", goal_sample_rate)
@@ -347,10 +349,9 @@ def collect_waypoints(epsilon, num_runs,
             raise NotImplementedError
 
         env = PrisonerRedEnv(env, blue_policy)
-        env.reset(seed=3)
+        env.reset(seed=seed)
 
-        # INFO: set random seed for the diffusion denoise process
-        seed = 0
+        # INFO: set random seed (tied to loop seed for per-seed reproducibility + diversity)
         np.random.seed(seed)
         random.seed(seed)
         torch.manual_seed(seed)
@@ -382,9 +383,9 @@ def collect_waypoints(epsilon, num_runs,
         hideout_observations.append(np.concatenate([np.expand_dims(np.array(env.hideout_locations), axis=0)]*waypt_num, axis=0))
         # plt.savefig("diverse_rrt_paths.png", bbox_inches='tight')
         if not got_stuck:
-            np.savez(path + f"/seed_{seed}_known_{env.num_known_cameras}_unknown_{env.num_unknown_cameras}.npz", 
+            np.savez(path + f"/seed_{seed}_known_{env.num_known_cameras}_unknown_{env.num_unknown_cameras}.npz",
                 hideout_observations=hideout_observations,
-                timestep_observations=timestep_observations, 
+                timestep_observations=timestep_observations,
                 red_locations=red_locations,
                 )
 
