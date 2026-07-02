@@ -91,7 +91,7 @@ def to_np(x):
 
 # class DiffusionModel(torch.nn.Module):
 #     def __init__(self, env, diffusion_path, ema_path, n_timesteps, clip_denoised=True, predict_epsilon=False) -> None:
-#         self.model = torch.load(diffusion_path)
+#         self.model = torch.load(diffusion_path, weights_only=False)
 #         self.ema_model = torch.load(ema_path)
 #         betas = cosine_beta_schedule(n_timesteps)
 #         alphas = 1. - betas
@@ -538,7 +538,7 @@ class DiffusionGlobalPlanner(object):
 
 class DiffusionStateOnlyGlobalPlanner(object):
     def __init__(self, env, diffusion_path, plot, traj_grader_path, costmap=None, res=None, sel=False) -> None:
-        self.model = torch.load(diffusion_path)
+        self.model = torch.load(diffusion_path, weights_only=False)
         self.env = env
         self.actions = []
         self.max_x, self.max_y = (self.env.dim_x, self.env.dim_y)

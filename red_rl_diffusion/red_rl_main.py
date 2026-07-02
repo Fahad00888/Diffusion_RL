@@ -23,7 +23,7 @@ from SAC.sac import SAC
 from red_bc.heuristic import BlueHeuristic
 
 
-matplotlib.use('TkAgg')
+matplotlib.use('Agg')
 import matplotlib.pylab
 from utils import save_video
 from config_loader import config_loader

@@ -40,7 +40,7 @@ train:
   policy_level: subpolicy # subpolicy, scheduler, heuristic, high_heuristic
   policy_type: sac # sac, ddpg
   model_type: free
-  path_type: whole # piece, whole
+  path_type: piece # piece, whole
   threat_model_freq: 3
   seq_len_in: 10
   seq_len_out: 8
