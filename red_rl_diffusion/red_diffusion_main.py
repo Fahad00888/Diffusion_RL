@@ -218,14 +218,14 @@ if __name__ == "__main__":
 
     env_path = "simulator/configs/balance_game.yaml"
     # print(agent_observations.shape)
-    # red_diffusion_train(epsilon, 
-    #                      num_runs, 
-    #                      starting_seed, 
-    #                      random_cameras, 
-    #                      folder_name, 
-    #                      heuristic_type, 
-    #                      blue_type, 
-    #                      env_path, 
-    #                      continue_training_estimator_flag, show=True)
-    red_diffusion_test()
+    red_diffusion_train(epsilon,
+                         num_runs,
+                         starting_seed,
+                         random_cameras,
+                         folder_name,
+                         heuristic_type,
+                         blue_type,
+                         env_path,
+                         continue_training_estimator_flag, show=True)
+    # red_diffusion_test()
     # red_diffusion_rrt_time_cmp()

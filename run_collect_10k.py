@@ -13,8 +13,12 @@ os.makedirs(OUT, exist_ok=True)
 for seed in range(a.start, a.end):
     if done(seed):
         continue
-    col.collect_waypoints(0, 10000, seed, False, "balance_game",
-                          "RRTStarOnly", "heuristic",
-                          "simulator/configs/balance_game.yaml",
-                          show=False, loop_runs=1)
+    try:
+        col.collect_waypoints(0, 10000, seed, False, "balance_game",
+                              "RRTStarOnly", "heuristic",
+                              "simulator/configs/balance_game.yaml",
+                              show=False, loop_runs=1)
+    except Exception as e:
+        print(f"SKIPPED seed {seed}: {repr(e)}", flush=True)
+        continue
 print(f"WORKER DONE [{a.start},{a.end})")

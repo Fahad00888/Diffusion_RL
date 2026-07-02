@@ -53,9 +53,8 @@ class StateOnlyDataset(torch.utils.data.Dataset):
         for fp in fps:
             for file_name in sorted(os.listdir(fp)):
                 np_file = np.load(os.path.join(fp, file_name), allow_pickle=True)
-                # print(np_file)
-                # self.max_agent_size = max(self.max_agent_size, np.squeeze(np_file["agent_observations"]).shape[1])
-                np_files.append(np_file)
+                np_files.append({k: np_file[k] for k in np_file.files})
+                np_file.close()
                 self.file_num = self.file_num + 1
 
         self.set_normalization_factors()
