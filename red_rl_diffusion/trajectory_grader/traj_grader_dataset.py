@@ -27,7 +27,8 @@ class TrajGraderDataset(Dataset):
                 np_file = np.load(os.path.join(fp, file_name), allow_pickle=True)
                 # print(np_file)
                 # self.max_agent_size = max(self.max_agent_size, np.squeeze(np_file["agent_observations"]).shape[1])
-                np_files.append(np_file)
+                np_files.append(dict(np_file))
+                np_file.close()
                 self.file_num = self.file_num + 1
 
         for np_file in np_files:
