@@ -38,7 +38,7 @@ fugitive_speed: 15
 detection_factor: 4.0 # 4.0
 include_fugitive_location_in_blue_obs: False
 comm_dim: 0
-reward_setting: rl # rl, piece
+reward_setting: piece # rl, piece  # switched to match paper's r = r_g + r_d + r_adv (Algorithm 3)
 known_hideout_locations:
   - 323, 1623
   - 1804, 737

@@ -30,9 +30,9 @@ class SAC(object):
         hard_update(self.critic_target, self.critic)
 
         if self.policy_type == "sac":
-            # Target Entropy = −dim(A) (e.g. , -6 for HalfCheetah-v2) as given in the paper
+            # Target Entropy = −dim(A) as given in the paper, computed from actual action dimension
             if self.automatic_entropy_tuning is True:
-                self.target_entropy = -torch.Tensor([3]).to(self.device).item() # 2
+                self.target_entropy = -float(num_out_pol)
                 self.log_alpha = torch.zeros(1, requires_grad=True, device=self.device)
                 self.alpha_optim = Adam([self.log_alpha], lr=entropy_lr)
             # INFO: set the policy and its optimization
@@ -347,6 +347,8 @@ class SAC(object):
                     'critic_target_state_dict': self.critic_target.state_dict(),
                     'critic_optimizer_state_dict': self.critic_optim.state_dict(),
                     'policy_optimizer_state_dict': self.policy_optim.state_dict(),
+                    'log_alpha': self.log_alpha.detach().cpu() if hasattr(self, 'log_alpha') else None,
+                    'alpha_optimizer_state_dict': self.alpha_optim.state_dict() if hasattr(self, 'alpha_optim') else None,
                     # 'threat_model_dict': self.threat_optim.state_dict()
                     },
                     ckpt_path)
@@ -361,6 +363,13 @@ class SAC(object):
             self.critic_target.load_state_dict(checkpoint['critic_target_state_dict'])
             self.critic_optim.load_state_dict(checkpoint['critic_optimizer_state_dict'])
             self.policy_optim.load_state_dict(checkpoint['policy_optimizer_state_dict'])
+            # Restore entropy temperature state (older checkpoints lack these keys)
+            if checkpoint.get('log_alpha') is not None and hasattr(self, 'log_alpha'):
+                with torch.no_grad():
+                    self.log_alpha.copy_(checkpoint['log_alpha'].to(self.device))
+                self.alpha = self.log_alpha.exp()
+                if checkpoint.get('alpha_optimizer_state_dict') is not None and hasattr(self, 'alpha_optim'):
+                    self.alpha_optim.load_state_dict(checkpoint['alpha_optimizer_state_dict'])
 
             if evaluate:
                 self.policy.eval()

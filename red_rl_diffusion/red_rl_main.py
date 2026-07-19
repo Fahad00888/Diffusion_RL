@@ -384,7 +384,7 @@ def red_rl_piece_sac(config, env_config):
     for ep in range(recent_episode, config["train"]["episode_num"]):
 
         # INFO: Set the dist penalty coefficient
-        env.set_dist_coeff(ep, config["train"]["dist_coeff_episode_num"], 0.05)
+        env.set_dist_coeff(ep, config["train"]["dist_coeff_episode_num"], 1.0)  # fixed at 1.0 to match paper Algorithm 3 (no curriculum decay)
 
         # INFO: Start a new episode
         
@@ -475,11 +475,11 @@ if __name__ == '__main__':
     """Benchmark Starts Here"""
     # INFO: Specify the benchmarking parameters: random seeds, learning rates
     seeds = [0]
-    critic_lrs = [0.003]
-    policy_lrs = [0.003]
-    entropy_lrs = [0.003]
+    critic_lrs = [config["train"]["critic_lr"]]
+    policy_lrs = [config["train"]["policy_lr"]]
+    entropy_lrs = [config["train"]["entropy_lr"]]
     threat_lrs = [0.003]
-    load_checkpoint = False
+    load_checkpoint = config["train"]["continue"]
     start_episode = 0
     if load_checkpoint:
         print("\033[33mYou are loading checkpoint\033[33m")

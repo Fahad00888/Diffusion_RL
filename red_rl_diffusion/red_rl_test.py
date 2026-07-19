@@ -25,7 +25,7 @@ from blue_bc.maddpg import BaseMADDPG
 from SAC.sac import SAC
 from red_bc.heuristic import BlueHeuristic
 
-matplotlib.use('TKagg')
+matplotlib.use('Agg')
 import matplotlib.pylab
 from utils import save_video
 from config_loader import config_loader
@@ -710,7 +710,7 @@ if __name__ == '__main__':
     # INFO: these configurations are used for benchmark
     bench_env_name = "prisoner"
     benchmark_type = ["A_Star(escape)","RRT_Star(escape)", "VO", "DDPG", "SAC", "Diffusion", "Diffusion_RL", "Sel_Diffusion_RL"]
-    benchmark_type = ["Diffusion_RL"]
+    benchmark_type = ["Diffusion_RL", "Sel_Diffusion_RL"]
 
     benchmark_folder = {"A_Star(escape)": "./logs/RAL2024/benchmark_results/A_Star(escape)",
                         "RRT_Star(escape)": "./logs/RAL2024/benchmark_results/RRT_Star(escape)",

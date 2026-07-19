@@ -131,7 +131,7 @@ def diffusion_global_rl_local_collect(config, env_config):
                 gamma=config["train"]["gamma"], tau=config["train"]["tau"], critic_lr=config["train"]["critic_lr"], policy_lr=config["train"]["policy_lr"],  entropy_lr=config["train"]["entropy_lr"],
                 hidden_dim=config["train"]["hidden_dim"], policy_type=config["train"]["policy_type"], device=device, constrained=False)
 
-    sac.init_from_save("./logs/marl/20260702-153348/sac_piece/model.pth", evaluate=True)
+    sac.init_from_save("./logs/marl/20260718-185114/sac_piece/model.pth", evaluate=True)
     recent_episode = 0
 
     # INFO: Initialize the buffer
@@ -292,7 +292,7 @@ def visualize_costmap():
     env = load_environment(env_config)
     # INFO: Initialize datasets
     # visualize_dataset = TrajGraderDataset(file_root="./logs/marl/20240110-001808/data")
-    visualize_dataset = TrajGraderDataset(file_root="./logs/marl/20260703-151558/data")
+    visualize_dataset = TrajGraderDataset(file_root="./logs/marl/20260719-093137/data")
     # INFO: Initialize dataloader
     visualize_data_loader = DataLoader(visualize_dataset, batch_size=1, num_workers=1, shuffle=True, pin_memory=True)
     # INFO: Begin visualization
@@ -344,7 +344,7 @@ def visualize_costmap():
         detection_map = np.maximum(detection_map, circle_array) 
         detection_map_gt = np.maximum(detection_map, rect_array) 
 
-    np.savez("./logs/marl/20260702-153348/sac_piece/model/costmap.npz", costmap=detection_map_gt, res=res)
+    np.savez("./logs/marl/20260718-185114/sac_piece/model/costmap.npz", costmap=detection_map_gt, res=res)
 
     # plt.xlim(0, 2428)
     # plt.ylim(0, 2428)

@@ -34,7 +34,7 @@ train:
   critic_lr: 0.0005
   policy_lr: 0.0005
   threat_lr: 0.0005
-  entropy_lr: 0.0005
+  entropy_lr: 0.00005  # reduced 10x to slow alpha collapse, allow longer exploration
   tau: 0.01
   gamma: 0.97 # 0.95, 0.995, 0.99, 0.8
   policy_level: subpolicy # subpolicy, scheduler, heuristic, high_heuristic
@@ -46,7 +46,7 @@ train:
   seq_len_out: 8
 
   continue: True
-  para_file: /home/wu/GatechResearch/Zixuan/PrisonerEscape/IROS_2023_logs/MARL/three_pass_filter_two_detections_noMARLTraining_no_sharing/three_pass_filter_two_detections_noMARLTraining_no_sharing/model.pth
+  para_file: logs/marl/20260717-165416/sac_piece/model.pth
   high_para_file: "/home/wu/GatechResearch/Zixuan/PrisonerEscape/logs/marl/20230211-032801/hier_gnn_a_star_filtering/model.pth"
   low_para_file: "/home/wu/GatechResearch/Zixuan/PrisonerEscape/logs/marl/20230211-032801/hier_gnn_a_star_filtering/model.pth"
 
