@@ -47,3 +47,16 @@ Isolated tests on GPU 1 all pass (100 matmuls, checkpoint load, 20 inference ste
 - Final model: `logs/marl/20260718-185114/sac_piece/model/100000.pth` (100,001 episodes)
 - Costmap regenerated from 1,500 rollouts of the final policy
 - Caveat: the run was interrupted by several machine reboots; because of bug #6 (discovered afterwards), alpha restarted near 1.0 at each resume rather than continuing its decay. An uninterrupted run would anneal more sharply in late training. Evaluation is unaffected — it uses the deterministic mean action.
+
+## Seed-robustness check
+
+The headline result was re-evaluated on a second, disjoint seed block (2e6+1+ep, 100 episodes) to rule out seed-specific luck or overlap with training:
+
+| Eval seed block | Goal-reach | Mean detection |
+|---|---|---|
+| 1e6+1+ep | 1.000 | 77.57 |
+| 2e6+1+ep | 1.000 | 74.11 |
+
+200 distinct episodes, zero failures. Training seeds span 0-100,000 and do not overlap either eval block. Re-running the original block reproduced identical results, confirming the evaluation pipeline is deterministic.
+
+Context for the 1.000 figure: goal-reaching is close to saturated in this environment — the non-learning A* and VO baselines reach 0.980 — so 1.000 is a modest step above the paper's 0.960 rather than an anomalous one, and is within sampling error of it at n=100. Detection avoidance, not goal-reaching, is the metric that meaningfully separates methods here.
