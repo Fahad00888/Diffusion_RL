@@ -3,8 +3,8 @@ control:
   I: 0.0
   P: 20.0
 environment:
-  cuda: false
-  dir_path: logs/marl/20231214-011502/regular_a_star_filtering
+  cuda: true
+  dir_path: logs/marl/20260702-153348/sac_piece
   env_config_file: ./simulator/configs/balance_game.yaml
   estimator: filtering
   fugitive_policy: a_star
@@ -21,20 +21,22 @@ scheduler:
   - ./logs/marl/subpolicies/hideout1.pth
   - ./logs/marl/subpolicies/hideout2.pth
   - ./logs/marl/subpolicies/hideout3.pth
+  - ./logs/marl/subpolicies/evasive.pth
   scheduler_files: /home/wu/GatechResearch/Zixuan/PrisonerEscape/logs/marl/schedulers/hideout_time_evasive_noEntropy.pth
-  subpolicy_num: 3
+  subpolicy_num: 4
 train:
   batch_size: 256
   behavior_policy: AStar
   buffer_size: 1048576
   continue: false
-  critic_lr: 0.000125
-  episode_num: 50001
-  filter_lr: 1.0e-06
+  critic_lr: 0.003
+  dist_coeff_episode_num: 100001
+  entropy_lr: 0.003
+  episode_num: 100001
   filtering_model_config: ./configs/IROS_2023/sel_mlp.yaml
   filtering_model_path: ./IROS_2023_logs/filter/random/combine/20230226-1817/best.pth
   final_noise_scale: 0.0
-  gamma: 0.99
+  gamma: 0.97
   hidden_dim: 256
   high_buffer_size: 1048576
   high_n_exploration_eps: 2500
@@ -43,16 +45,22 @@ train:
   low_buffer_size: 1048576
   low_n_exploration_eps: 15000
   low_para_file: /home/wu/GatechResearch/Zixuan/PrisonerEscape/logs/marl/20230211-032801/hier_gnn_a_star_filtering/model.pth
-  n_exploration_eps: 50001
+  model_type: free
+  n_exploration_eps: 75001
   off_policy_ep: 0
   only_low_episode_num: 25001
   para_file: /home/wu/GatechResearch/Zixuan/PrisonerEscape/IROS_2023_logs/MARL/three_pass_filter_two_detections_noMARLTraining_no_sharing/three_pass_filter_two_detections_noMARLTraining_no_sharing/model.pth
-  policy_level: scheduler
-  policy_lr: 0.000125
+  path_type: piece
+  policy_level: subpolicy
+  policy_lr: 0.003
+  policy_type: sac
   save_interval: 1000
   seq_len: 4
-  shared_parameter: false
+  seq_len_in: 10
+  seq_len_out: 8
   start_episode: 0
   steps_per_update: 1
   tau: 0.01
+  threat_lr: 0.0005
+  threat_model_freq: 3
   video_step: 1000
